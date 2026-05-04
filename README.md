@@ -25,6 +25,6 @@ All figures generated for the manuscript are fully reproducible using the Python
 To run the simulations locally, clone this repository and install the standard scientific dependencies:
 
 ```bash
-git clone [https://github.com/orlandoue/relativistic-stellar-EPs.git](https://github.com/YOUR_USERNAME/relativistic-stellar-EPs.git)
+git clone [https://github.com/orlandoue/relativistic-stellar-EPs.git](https://github.com/orlandoue/relativistic-stellar-EPs.git)
 cd relativistic-stellar-EPs
 pip install -r requirements.txt
