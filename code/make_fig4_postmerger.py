@@ -1,14 +1,14 @@
 """
 Figure 4: post-merger remnant QNM evolution (De=0.11, gamma_GW=0.03).
 The sweep in Lambda passes exactly through the two real-axis EP2 coalescences.
-Cproj = 5.06e-32 is the fiducial spatial-projection coefficient (see sec 9.5).
+Cproj = 5.32e-32 is the fiducial spatial-projection coefficient (see sec 9.5).
 Usage: python make_fig4_postmerger.py
 """
 import numpy as np
 import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from cqg_core import roots_np, find_ep2
 
-De, g, Cproj, f0 = 0.11, 0.03, 5.06e-32, 3.5e3
+De, g, Cproj, f0 = 0.11, 0.03, 5.32e-32, 3.5e3
 # exact EP2 of this (De,gamma):
 L1 = find_ep2(De, g, -1.15j, 1.71)[1].real   # ~1.712
 L2 = find_ep2(De, g, -4.33j, 2.36)[1].real   # ~2.357

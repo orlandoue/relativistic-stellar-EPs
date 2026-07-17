@@ -38,6 +38,16 @@ def find_ep2(De, g, seed_Om=-1.2j, seed_L=1.5):
     Om,L=findroot(lambda a,b:eqs(a,b),(mpc(seed_Om),mpc(seed_L)))
     return complex(Om), complex(L)
 
+def find_ep2_mp(De, g, seed_Om=-1.2j, seed_L=1.5):
+    """multiprecision version: returns (Om, Lam) as mpc without degrading."""
+    De_,g_ = mpf(str(De)),mpf(str(g))
+    def eqs(Om,Lam):
+        c=[-1j*De_,(1+2*De_*g_),1j*(De_*(1+g_**2)+Lam+2*g_),-(1+g_**2)]
+        P =c[0]*Om**3+c[1]*Om**2+c[2]*Om+c[3]
+        Pp=3*c[0]*Om**2+2*c[1]*Om+c[2]
+        return [P,Pp]
+    return findroot(lambda a,b:eqs(a,b),(mpc(seed_Om),mpc(seed_L)))
+
 def find_cusp(g):
     """cusp exacto (raiz triple P=P'=P''=0) a gamma dado."""
     g_=mpf(str(g))
@@ -49,6 +59,18 @@ def find_cusp(g):
         return [P,Pp,Ppp]
     De,Lam,Om=findroot(lambda a,b,c:eqs(a,b,c),(mpf('0.19'),mpf('1.5'),mpc(0,-1.7)))
     return complex(Om), float(De.real), float(Lam.real)
+
+def find_cusp_mp(g):
+    """multiprecision version: returns (Om, De, Lam) without degrading to float."""
+    g_=mpf(str(g))
+    def eqs(De,Lam,Om):
+        c=[-1j*De,(1+2*De*g_),1j*(De*(1+g_**2)+Lam+2*g_),-(1+g_**2)]
+        P  =c[0]*Om**3+c[1]*Om**2+c[2]*Om+c[3]
+        Pp =3*c[0]*Om**2+2*c[1]*Om+c[2]
+        Ppp=6*c[0]*Om+2*c[1]
+        return [P,Pp,Ppp]
+    De,Lam,Om=findroot(lambda a,b,c:eqs(a,b,c),(mpf('0.19'),mpf('1.5'),mpc(0,-1.7)))
+    return Om, De, Lam
 
 def migration_De(g):
     """De* del cusp via ley de migracion (1+2De g)^3 = 27 De^2 (1+g^2)."""

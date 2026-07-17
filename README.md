@@ -36,7 +36,7 @@ in which every γₘ = (m+½)/k is an output of the boundary-value problem.
   insufficient: condition numbers ~10¹⁴).
 - **`make_all_figures.py`** — regenerates figures 1, 2, 3, 6 from the core.
 - **`make_fig4_postmerger.py`** — figure 4 (post-merger sweep through the two
-  exact real-axis EP2 coalescences, De = 0.11, γ = 0.03, Cproj = 5.06×10⁻³²).
+  exact real-axis EP2 coalescences, De = 0.11, γ = 0.03, Cproj = 5.32×10⁻³²).
 
 ### `figures/`
 Generated PDF figures (output of the scripts above).
@@ -69,10 +69,25 @@ python bordered_newton_robustness.py  # §7.4 robustness continuation (slow, mp)
 
 | Quantity | Value |
 |----------|-------|
-| A₃ cusp γ=0: De\* | 0.19245008972987526219 = 1/(3√3) |
-| A₃ cusp γ=0: Λ\* | 1.53960071783900209752 = 8/(3√3) |
-| A₃ cusp γ=0.1: De\*, Λ\*, y\* | 0.20329171841712948, 1.37039909892521061, 1.70634651161428308 |
-| EP2 (De=0.15, γ=0.1): Λ\*, y\* | 1.50957528657750806, 1.23851301015885862 |
+| A₃ cusp γ=0: De\* | 0.19245008972987525484 = 1/(3√3) |
+| A₃ cusp γ=0: Λ\* | 1.5396007178390020387 = 8/(3√3) |
+| A₃ cusp γ=0.1: De\*, Λ\*, y\* | 0.20329171841712946742, 1.3703990989252106724, 1.7063465116142830416 |
+| EP2 (De=0.15, γ=0.1): Λ\*, y\* | 1.5095752865775080251, 1.2385130101588585499 |
 
 ## License
 MIT (or as required by the journal).
+
+
+## Figure-to-file map
+
+The figure filenames predate a reindexing; the manuscript references each by
+number. The correspondence is:
+
+| Manuscript | File |
+|-----------|------|
+| Figure 1 | figures/fig1_ep_curve.pdf |
+| Figure 2 | figures/fig2_cusp_zoom.pdf |
+| Figure 3 | figures/fig6_certified_scaling.pdf |
+| Figure 4 | figures/fig5_robustness_branches.pdf |
+| Figure 5 | figures/fig3_splitting.pdf |
+| Figure 6 | figures/fig4_physical_NS_application.pdf |
