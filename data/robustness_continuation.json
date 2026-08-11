@@ -88,9 +88,9 @@
  "cusp": [
   [
    0.0,
-   "0.04065834368342589348432865",
-   "6.851995494626053362094233",
-   "-8.531732558071415208078755"
+   "0.04065834",
+   "6.851995",
+   "-8.531733"
   ],
   [
    0.04,
@@ -122,5 +122,6 @@
    "(5.619344133937760169620125 + 0.0j)",
    "(-8.750506290715410959841618 + 0.0j)"
   ]
- ]
+ ],
+ "_note": "Continuation values truncated to 7 significant figures. The bordered solver tolerance is 1e-(dps-8) and the bordered-Jacobian condition number is 1e13-1e15, so the forward accuracy of these branch points is 1e-7 or worse, degrading towards the fold. Storing more digits would overstate the precision."
 }

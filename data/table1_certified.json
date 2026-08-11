@@ -1,18 +1,21 @@
 {
-  "A3_cusp_gamma0": {
-    "De": 0.19245008972987526,
-    "Lambda": 1.539600717839002,
-    "y": 1.7320508075688772
-  },
-  "A3_cusp_gamma0.1": {
-    "De": 0.20329171841712948,
-    "Lambda": 1.3703990989252106,
-    "y": 1.706346511614283
-  },
-  "EP2_De0.15_gamma0.1": {
-    "Lambda": 1.509575286577508,
-    "y": 1.2385130101588586
-  },
-  "migration_law": "(1+2*De*gamma)^3 = 27*De^2*(1+gamma^2)",
-  "precision": "40-digit mpmath, residuals < 1e-40"
+ "_note": "Values stored as strings: multiprecision quantities cannot be round-tripped through IEEE doubles.",
+ "precision": "20 significant digits, resolution-independent across N=24,32,40 at working precision d=30; attained residuals <= 1e-26",
+ "A3_cusp_gamma0": {
+  "De": "0.19245008972987525484",
+  "Lambda": "1.5396007178390020387",
+  "y": "1.7320508075688772935",
+  "exact": "De=1/(3*sqrt(3)), Lambda=8/(3*sqrt(3)), y=sqrt(3)"
+ },
+ "A3_cusp_gamma0.1": {
+  "De": "0.20329171841712946742",
+  "Lambda": "1.3703990989252106724",
+  "y": "1.7063465116142830416"
+ },
+ "EP2_De0.15_gamma0.1": {
+  "Lambda": "1.5095752865775080251",
+  "y": "1.2385130101588585499"
+ },
+ "migration_law": "(1+2*De*gamma)^3 = 27*De^2*(1+gamma^2)",
+ "migration_law_residual_at_cusp_gamma0.1": "0 to 40 decimal digits"
 }

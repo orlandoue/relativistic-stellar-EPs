@@ -1,0 +1,19 @@
+{
+ "_note": "Defective (Jordan-block) inter-sector crossings, Eq. (49). These are NOT diabolic (semisimple) degeneracies: geometric multiplicity is one, as shown by the two-term recurrence Eq. (42). Values as strings.",
+ "crossings": {
+  "(2,10)": {
+   "s": "-6.5",
+   "zeta0": "5.0776923076923076923",
+   "exact": "s=-13/2, zeta0=6601/1300"
+  },
+  "(0,12)": {
+   "s": "-6.5",
+   "zeta0": "7.5546153846153846154"
+  },
+  "(0,16)": {
+   "s": "-8.5",
+   "zeta0": "7.8005882352941176471"
+  }
+ },
+ "partner_of_fundamental_EP2": "(2,10): the branch that annihilates with the fundamental EP2 at eta_c ~ 0.1941 lands, continued to eta=0, on s=-6.4999999, zeta0=5.0776923 (verified)."
+}

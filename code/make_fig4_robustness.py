@@ -17,11 +17,24 @@ HALLAZGO AL DENSIFICAR (verificado en sesion, N=20 y N=24, 25 digitos):
   eta ~ 0.1095. Con pasos gruesos (0.05) Newton salta por encima y
   recupera la rama: eta=0.15 da zeta_0*=6.4423, que coincide con el valor
   publicado y con la extrapolacion suave de zeta_0* desde eta=0.1095.
-  CONSECUENCIA PRACTICA: para regenerar la figura hay que (a) usar pasos
-  finos en zeta_0 pero permitir que -s* gire rapido, o (b) parametrizar la
-  rama por zeta_0* en vez de por eta cerca del minimo. El continuador de
-  produccion del repositorio ya lo hace; este script documenta el problema
-  y sirve para el estudio de resolucion, que es lo que faltaba.
+  IDENTIDAD DE RAMA A TRAVES DEL GIRO — verificada:
+  el solapamiento normalizado del autovector convergido a ambos lados es
+  |<phi_a,phi_b>| / (|phi_a| |phi_b|) = 0.9997  (eta = 0.105 -> 0.13),
+  indistinguible de los 0.9991-0.9998 entre puntos vecinos fuera del giro.
+  Es la MISMA rama analitica: el giro es una rotacion rapida en s, no un
+  cambio de rama.
+
+  CONSECUENCIA PRACTICA: para regenerar la figura hay que (a) cruzar el giro
+  con un paso lo bastante grueso, o (b) reparametrizar la rama por zeta_0*
+  en vez de por eta cerca del minimo, que es regular alli.
+  [NOTA: una version previa de este comentario afirmaba que el continuador de
+   produccion (bordered_newton_robustness.py) ya reparametriza por zeta_0.
+   NO lo hace: continua en eta. Por eso se atasca en el mismo sitio.]
+
+  eta_c: los dos continuadores del repositorio dan valores que difieren en la
+  cuarta cifra (0.19403 el de produccion, por agotamiento del paso; 0.19415
+  por extrapolacion de pliegue). El manuscrito cita eta_c = 0.1941(1), que es
+  la precision que la geometria del pliegue soporta.
 
 Sistema: seccion 7 con perfil deformado C = 1 + eta (1 - sigma^2)   [Ec. (47)]
 AUTOCONTENIDO: solo mpmath (+ matplotlib para la figura).
@@ -238,7 +251,8 @@ if __name__ == "__main__":
                  'under transport-profile deformation '
                  r'($\tau=0.03$, $N=20,24,28$, 25 digits)')
     fig.tight_layout()
-    fig.savefig('fig4_robustness.pdf', dpi=150, bbox_inches='tight')
-    print("\nfig4_robustness.pdf guardada")
-fig.tight_layout(); fig.savefig('../figures/fig4_physical_NS_application.pdf',dpi=150,bbox_inches='tight')
-print("fig4 saved")
+    import os
+    outdir = '../figures' if os.path.isdir('../figures') else '.'
+    out = os.path.join(outdir, 'fig5_robustness_branches.pdf')
+    fig.savefig(out, dpi=150, bbox_inches='tight')
+    print(f'\nfigura 4 del manuscrito guardada en {out}')

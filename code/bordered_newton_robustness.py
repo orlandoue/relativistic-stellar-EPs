@@ -16,23 +16,39 @@
 # Cada sector tiene su EP2 y su cusp, dados EXACTAMENTE por el algebra de la
 # V2 del manuscrito; la Ec. (23) se satisface con residuo 0 en el sector m=0.
 #
-# HALLAZGOS CERTIFICADOS EN SESION (N=20-28, dps=25-30; correr este script
-# con N=28/dps=30 produce los datos citables):
+# HALLAZGOS CERTIFICADOS (N=20-28, dps=25-30; correr con N=28/dps=30 produce
+# los datos citables). Todas las derivadas del Jacobiano son ANALITICAS
+# (T', T'' y T'''=6*tau en T_all; derivadas respecto de zeta0 y tau en
+# solve_EP3): no se usan diferencias finitas en ninguna parte.
 #   * Rama A = EP2 del sector m=0 (fundamental): persiste REAL y sobre el eje
-#     para eta en [0, eta_c), eta_c ~ 0.1942 (tau=0.03).
-#   * Rama A' = EP2 del sector m=2 (identidad verificada a 16 digitos en
-#     eta=0: s*=-6.38293775645287, z0*=5.076486343593958).
+#     para eta en [0, eta_c), eta_c ~ 0.1941 (tau=0.03).
+#   * Rama A' = la companera con la que A se aniquila en eta_c. Continuada
+#     hacia atras hasta eta=0 aterriza en el CRUCE INTERSECTORIAL (2,10),
+#     s=-6.4999999, zeta0=5.0776923  (= -13/2 y 6601/1300, ocho digitos).
+#     [CORRECCION: una version previa de este comentario identificaba A' con
+#      el EP2 PROPIO del sector m=2, que esta en (-6.3829377564, 5.0764863436).
+#      Son dos objetos DISTINTOS: sus zeta0 difieren en 0.0012 pero sus s en
+#      0.117. La continuacion muestra que la companera es el cruce (2,10),
+#      que es lo que afirma el manuscrito.]
 #   * En eta_c, A y A' SE FUSIONAN (pliegue) y escapan a zeta0 COMPLEJO como
 #     par conjugado: p.ej. eta=0.21: s*=-6.2249+0.1131i, z0*=5.8561+0.3365i.
 #     La transicion de sobreamortiguamiento pasa de punto critico exacto a
 #     crossover suave. NO es un EP3 (verificado: solver EP3-eta diverge).
-#   * Rama B nace del punto DIABOLICO intersectorial s=-6.5,
-#     z0 = 0.805*61/6.5 = 7.554615... donde P_0 y P_12 comparten raiz; el
-#     acople eta lo convierte en EP2 genuino. Invisible para el modelo 0-D.
+#   * Rama B nace del cruce intersectorial DEFECTIVO s=-6.5,
+#     z0 = 7.554615... donde P_0 y P_12 comparten raiz. Es un bloque de Jordan,
+#     NO una degeneracion diabolica (semisimple): la multiplicidad geometrica
+#     es uno por la recurrencia de dos terminos. El acople eta lo convierte en
+#     EP2 genuino. Invisible para el modelo 0-D.
 #   * La "rama 2" (s~-8.1 en eta~0.2) es otra rama sectorial deformada
 #     (candidato: sector m=5, EP2 en (-8.0872, 2.9682)); pendiente confirmar.
 #   * El cusp del sector m=0 (EP3, tau libre) persiste al menos hasta
-#     eta=0.44 con tau* ~ 0.0406-0.0411 casi constante.
+#     eta=0.44 con tau* ~ 0.0406-0.0411 casi constante. (El manuscrito cita
+#     de forma conservadora solo hasta eta~0.2, el alcance de la corrida
+#     archivada en data/robustness_continuation.json.)
+#
+# CONTROL DE PASO (documentado en el Apendice B del manuscrito): paso inicial
+# 0.05, x1.4 tras exito con tope 0.05, /2 tras fallo, suelo 2e-5. Rechazo de
+# salto de rama: |ds| < 0.25+3*deta (EP2); |ds|<0.6 y |dtau|<0.01 (EP3).
 # =============================================================================
 from mpmath import mp, mpf, mpc, matrix, lu_solve, cos, pi, sqrt, nstr, findroot
 import json, time

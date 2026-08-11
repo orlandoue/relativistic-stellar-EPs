@@ -1,5 +1,5 @@
 """
-Regenerate all six figures of the manuscript from the certified core (cqg_core.py).
+Regenerate figures 1, 2 and 3 of the manuscript from the certified core (cqg_core.py).
 Every figure derives from the single validated Open Cusp Polynomial convention.
 Usage: python make_all_figures.py   (outputs to ../figures/)
 """
@@ -92,8 +92,9 @@ if __name__ == "__main__":
     fig2(); print("  fig2_cusp_zoom.pdf")
     eE,eC = fig_splitting('fig3_splitting.pdf','Non-analytic scaling of the eigenvalue splitting')
     print(f"  fig3_splitting.pdf  (asymptotic exponents: EP2={eE:.5f}, cusp={eC:.5f})")
+    # fig6_certified_scaling.pdf es la FIGURA 3 del manuscrito final
     fig_splitting('fig6_certified_scaling.pdf','Certified non-analytic splitting at the degeneracies')
     print("  fig6_certified_scaling.pdf")
-    print("Note: fig4 (post-merger) and fig5 (robustness) require the")
-    print("post-merger sweep and the bordered-Newton continuation; see")
-    print("make_fig4_postmerger.py and bordered_newton_robustness.py.")
+    print("Note: figure 4 (robustness) and figure 5 (post-merger) are produced by")
+    print("make_fig4_robustness.py and make_fig5_postmerger.py respectively.")
+    
