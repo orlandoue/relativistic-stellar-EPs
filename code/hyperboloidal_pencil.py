@@ -17,7 +17,7 @@
 #     T(s) = (1 + s tau)(s^2 I - s L2 - L1) + zeta0 s I
 #     L1 = (1-s^2)D2 - 2 s D - V0 I ,   L2 = -2 s D - I   (s = sigma aqui)
 #
-# VERIFICACIONES YA REALIZADAS (2026-07-05, sesion con Claude):
+# VERIFICACIONES REALIZADAS:
 #   * ansatz constante reproduce s^2+s+V0=0 (residuo 1e-11)
 #   * fundamental exacto a 3e-13 en float64
 #   * degradacion con el tono = no-normalidad fisica (usar mp cerca de EPs)
@@ -309,7 +309,13 @@ if __name__ == "__main__":
     # ---------------- FASE E: mapeo EP*(De, gamma) ----------------
     # el test decisivo de las Ecs. (22)-(23) del manuscrito: variar
     # tau (De) y V0 (gamma) y seguir el EP2 certificado por continuacion.
-    print("[E] Mapeo EP*(De, gamma) -- editar la grilla segun convenga")
+    print("[E] Mapeo EP*(De, gamma) -- EXPLORATORIO, no usado en el manuscrito.")
+    print("    AVISO: la semilla se reinicia en el punto certificado para cada")
+    print("    tau, de modo que para saltos grandes Newton puede converger a una")
+    print("    raiz ESPURIA de la cubica (zeta0 < 0, sin sentido fisico) y aun")
+    print("    asi reportar ok=True. Los resultados con zeta0 <= 0 se marcan")
+    print("    abajo y deben descartarse; el mapeo fiable del locus EP2 es el")
+    print("    de cqg_core.find_ep2 / certify_table1.py.")
     N = 28
     L1, L2, n = setup_mp(N, mpf(str(V0f)))
     filas = []
@@ -325,11 +331,13 @@ if __name__ == "__main__":
             Dev = k * tv
             filas.append((tv, Dev, complex(z_ep), complex(mpc(0, 1) * s_ep),
                           float(res), bool(ok)))
+            fisico = (complex(z_ep).real > 0)
+            marca = "" if fisico else "   <-- ESPURIO (zeta0<0): descartar"
             print(f"    tau={tv}: De={Dev:.4f}  zeta0*={complex(z_ep):.10f}  "
-                  f"w*={complex(mpc(0,1)*s_ep):.10f}  ok={ok}")
+                  f"w*={complex(mpc(0,1)*s_ep):.10f}  ok={ok}{marca}")
             s_g, z_g = s_ep, z_ep          # continuacion dentro de la rama
     np.save("faseE_mapa_EP.npy", np.array(filas, dtype=object))
 
-    print("\nListo. Siguientes fases (con Claude): comparacion cuantitativa con")
-    print("las Ecs. (22)-(23) del manuscrito, busqueda del segundo EP (colision")
-    print("con la rama de relajacion) y del cusp EP3 con solve_EP3_mp.")
+    print("\nFases exploratorias adicionales (no usadas en el manuscrito):")
+    print("busqueda del segundo EP (colision con la rama de relajacion) y del")
+    print("cusp EP3 con solve_EP3_mp.")

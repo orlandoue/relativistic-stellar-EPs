@@ -13,9 +13,9 @@ El teorema del paper prueba que, en la base {sigma^m}, T(s) es TRIANGULAR y que
 su determinante (para todo N) es el producto de las cubicas sectoriales
 P_m(s) = (1+s tau)(s^2+(2m+1)s+m(m+1)+V0) + zeta0*s.
 
-Ese resultado (ya verificado independientemente en la auditoria previa) NO basta
+Ese resultado NO basta
 para decidir si un cruce accidental P_m(s*)=P_M(s*)=0 (m != M) es un genuino
-cruce "diabolico" (dos autovectores independientes) o una degeneracion
+cruce "defectivo" (dos autovectores independientes) o una degeneracion
 "defectiva" (un solo autovector, bloque de Jordan). Eso depende de los
 terminos FUERA de la diagonal, que aqui se derivan explicitamente.
 
@@ -49,7 +49,7 @@ print()
 print("="*78)
 print("(b) T(s) sigma^m = (1+s tau)[s^2 - s L2 - L1] sigma^m + zeta0 s sigma^m")
 print("    (perfil alineado C=1, eta=0; el caso eta>0 se trata en la Sec. 7.4")
-print("    del paper y no es necesario para localizar los puntos 'diabolicos')")
+print("    del paper y no es necesario para localizar los puntos 'defectivos')")
 print("="*78)
 T_f = (1+s*tau)*(s**2*sigma**m - s*(-(2*m+1)*sigma**m) - (m*(m-1)*sigma**(m-2) - (m*(m+1)+V0)*sigma**m)) \
       + zeta0*s*sigma**m

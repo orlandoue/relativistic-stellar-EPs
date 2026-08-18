@@ -1,0 +1,59 @@
+{
+ "_note": "Branch-identity test of section 7.4(i). Normalised eigenvector overlap |<phi_a,phi_b>|/(||phi_a|| ||phi_b||) between consecutive eta on branch A, N=28, 25 digits, tau=0.03. The pair (0.105, 0.13) straddles the rapid turn near eta ~ 0.11.",
+ "overlaps": [
+  [
+   "0.00",
+   "0.05",
+   "0.998707",
+   false
+  ],
+  [
+   "0.05",
+   "0.08",
+   "0.999624",
+   false
+  ],
+  [
+   "0.08",
+   "0.10",
+   "0.999839",
+   false
+  ],
+  [
+   "0.10",
+   "0.105",
+   "0.999989",
+   false
+  ],
+  [
+   "0.105",
+   "0.13",
+   "0.999714",
+   true
+  ],
+  [
+   "0.13",
+   "0.15",
+   "0.999741",
+   false
+  ],
+  [
+   "0.15",
+   "0.175",
+   "0.99912",
+   false
+  ],
+  [
+   "0.175",
+   "0.19",
+   "0.998734",
+   false
+  ]
+ ],
+ "across_the_turn": 0.999714,
+ "neighbour_range": [
+  0.998707,
+  0.999989
+ ],
+ "verdict": "indistinguishable"
+}

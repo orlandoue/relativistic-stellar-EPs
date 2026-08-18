@@ -3,35 +3,28 @@
 ========================================
 PASO 3 de la demostracion: CONFIRMACION INDEPENDIENTE, a nivel del operador
 COMPLETO (no ya la matriz truncada a monomios del script 02, sino la
-discretizacion por colocacion de Chebyshev en sigma in [-1,1] que el propio
-repositorio del autor usa para certificar los EP2/EP3 del paper).
+discretizacion por colocacion de Chebyshev en sigma in [-1,1] usada para
+certificar los EP2/EP3 del articulo).
 
-Requiere el repositorio del autor clonado localmente:
-    git clone https://github.com/orlandoue/relativistic-stellar-EPs
-y reutiliza sus funciones setup_mp / T_all de
-    code/bordered_newton_robustness.py
-(mismo codigo, mismos operadores L1,L2,C, misma discretizacion -- ningun
-atajo propio).
+Reutiliza setup_mp / T_all de ../bordered_newton_robustness.py: mismo codigo,
+mismos operadores L1, L2, C y misma discretizacion, sin ningun atajo propio.
 
-Metodo: para cada punto diabolico declarado, se arma la matriz operador
+Metodo: para cada punto defectivo declarado, se arma la matriz operador
 T(s*, zeta0*) discretizada (N=20-22 puntos de Chebyshev) EN PRECISION
 MULTIPLE (mpmath, dps=25) y se calcula su descomposicion en valores
 singulares (SVD, numpy en doble precision sobre la matriz ya evaluada).
-Si la degeneracion fuese diabolica (geometricamente doble), DOS valores
-singulares caerian a cero de maquina; si es defectiva, solo UNO.
+Si la degeneracion fuese diabolica (semisimple, geometricamente doble), DOS
+valores singulares caerian a cero de maquina; si es defectiva, solo UNO.
 """
 import sys, os
 
-REPO = os.environ.get('REPO_PATH', '/home/claude/relativistic-stellar-EPs')
-sys.path.insert(0, os.path.join(REPO, 'code'))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 try:
     from bordered_newton_robustness import setup_mp, T_all
 except ImportError:
     raise SystemExit(
-        "No se encontro el repositorio del autor. Clonar primero con:\n"
-        "  git clone https://github.com/orlandoue/relativistic-stellar-EPs\n"
-        "y fijar REPO_PATH a esa carpeta (o dejarlo en el mismo directorio "
-        "que este script)."
+        "Could not import bordered_newton_robustness. Run this script from\n"
+        "code/defective_crossings_proof/ inside the repository tree."
     )
 
 from mpmath import mp, mpf
@@ -82,6 +75,6 @@ Nota metodologica: esta es una confirmacion NUMERICA (doble precision sobre
 la matriz ya evaluada en multiprecision) del resultado EXACTO y auto-
 consistente-con-cualquier-truncacion del script 02. La evidencia primaria y
 rigurosa es la de aritmetica racional exacta (02); este script demuestra que
-el mismo patron persiste en el operador tal como el propio repositorio del
-autor lo discretiza para certificar sus EP2/EP3.
+el mismo patron persiste en el operador tal como se lo discretiza en este
+repositorio para certificar los EP2/EP3 del articulo.
 """)

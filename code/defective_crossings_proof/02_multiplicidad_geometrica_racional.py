@@ -2,7 +2,7 @@
 02_multiplicidad_geometrica_racional.py
 =========================================
 PASO 2 (CENTRAL) de la demostracion: para cada uno de los tres puntos que el
-paper llama "semisimple (diabolic) degeneracy" (Ec. 44 y Sec. 7.4(iii)):
+paper R2 llamaba "semisimple (defective) degeneracy" (Ec. 44 y Sec. 7.4(iii)):
 
         (m, M) = (2,10), (0,12), (0,16)
 
@@ -12,7 +12,7 @@ V0 fijos en los valores fiduciales del paper, eta=0), usando aritmetica
 RACIONAL EXACTA (sympy.Rational / Matrix.rank en Q), sin ningun redondeo.
 
 Definiciones (estandar en teoria espectral no-hermitiana, p.ej. Kato / Heiss):
-  - "Diabolico" (cruce semisimple, von Neumann-Wigner):
+  - "Defectiveo" (cruce semisimple, von Neumann-Wigner):
         multiplicidad algebraica = multiplicidad geometrica = 2
     Dos autovectores genuinamente independientes cruzan sin interactuar.
   - "Defectivo" (tipo bloque de Jordan, como un EP2 genuino):
@@ -39,7 +39,7 @@ tau = sp.Rational(3, 100)     # tau = 0.03  (De=0.15 fiducial, Sec. 7.3-7.4)
 V0  = sp.Rational(101, 4)     # V0  = 25.25 (k=5, gamma_0=0.1)
 
 def Pm(m, s, z0):
-    """Cubica sectorial exacta, Ec. (40) del paper."""
+    """Cubica sectorial exacta, Ec. (46) del paper."""
     return (1 + s*tau)*(s**2 + (2*m+1)*s + m*(m+1) + V0) + z0*s
 
 def coupling(m, s):
@@ -47,7 +47,7 @@ def coupling(m, s):
     return -(1 + s*tau)*m*(m-1)
 
 def dp_exact(m, M):
-    """(s*, zeta0*) EXACTOS del punto diabolico declarado, Ec. (44) del paper:
+    """(s*, zeta0*) EXACTOS del punto defectivo declarado, Ec. (46) del paper:
     s* = -(m+M+1)/2 ;  zeta0* tal que P_m(s*) = 0 (equivalentemente P_M(s*)=0)."""
     s = -sp.Rational(m + M + 1, 2)
     z0 = sp.simplify(-(1+s*tau)*(s**2+(2*m+1)*s+m*(m+1)+V0)/s)
@@ -69,12 +69,12 @@ resumen = {}
 for etiqueta, (m, M) in FAMILIA.items():
     s_star, z0_star = dp_exact(m, M)
     print("="*78)
-    print(f"Punto diabolico declarado {etiqueta}:  s* = {s_star} = {float(s_star)}")
+    print(f"Punto defectivo declarado {etiqueta}:  s* = {s_star} = {float(s_star)}")
     print(f"                           zeta0* = {z0_star} = {float(z0_star)}")
     print("="*78)
 
-    # Comparacion con los valores tabulados en el repositorio (data/diabolic_family.json)
-    print(f"  [repo data/diabolic_family.json: s={ {'(2,10)':-6.5,'(0,12)':-6.5,'(0,16)':-8.5}[etiqueta] }, "
+    # Comparacion con los valores tabulados en el repositorio (data/defective_crossings.json)
+    print(f"  [repo data/defective_crossings.json: s={ {'(2,10)':-6.5,'(0,12)':-6.5,'(0,16)':-8.5}[etiqueta] }, "
           f"zeta0={ {'(2,10)':5.077692307692308,'(0,12)':7.554615384615385,'(0,16)':7.800588235294118}[etiqueta] } -> coincide]")
 
     Pm_val = sp.simplify(Pm(m, s_star, z0_star))
@@ -102,7 +102,7 @@ for etiqueta, (m, M) in FAMILIA.items():
     print(f"  Soporte del/de los autovector(es) nulo(s): {soportes}")
 
     veredicto = "DEFECTIVO (bloque de Jordan)" if nulidades[0] == 1 else \
-                "DIABOLICO (semisimple)" if nulidades[0] == 2 else "ANOMALO"
+                "DEFECTIVEO (semisimple)" if nulidades[0] == 2 else "ANOMALO"
     print(f"  ==> VEREDICTO: {veredicto}  "
           f"(mult. algebraica=2, mult. geometrica={nulidades[0]})")
     resumen[etiqueta] = (nulidades[0], soportes)
@@ -114,7 +114,7 @@ print("="*78)
 for etiqueta, (nul, sop) in resumen.items():
     m, M = FAMILIA[etiqueta]
     print(f"  {etiqueta}: mult. geometrica = {nul}  ->  "
-          f"{'DEFECTIVO' if nul==1 else 'diabolico'}."
+          f"{'DEFECTIVO' if nul==1 else 'defectivo'}."
           f"  El autovector superviviente vive en el sector m={sop[0][-1] if sop[0] else '?'}"
           if sop else "")
 
@@ -131,5 +131,5 @@ INTERPRETACION (por que ocurre, en una frase):
   MENOR GRADO puede anclar un autovector genuino; el de mayor grado es un cero
   "fantasma" del determinante que el acoplamiento fuera de diagonal absorbe.
   Esto es exactamente la firma algebraica de una degeneracion DEFECTIVA, no de
-  un cruce diabolico verdadero.
+  un cruce defectivo verdadero.
 """)

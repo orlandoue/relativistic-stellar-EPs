@@ -1,5 +1,5 @@
 {
- "_note": "Defective (Jordan-block) inter-sector crossings, Eq. (49). These are NOT diabolic (semisimple) degeneracies: geometric multiplicity is one, as shown by the two-term recurrence Eq. (42). Values as strings.",
+ "_note": "Defective (Jordan-block) inter-sector crossings, Eq. (51). These are NOT defective (semisimple) degeneracies: geometric multiplicity is one, as shown by the two-term recurrence Eq. (42). Values as strings.",
  "crossings": {
   "(2,10)": {
    "s": "-6.5",

@@ -1,137 +1,101 @@
-# ¿Son "diabólicos" los cruces intersectoriales del paper? — No: son defectivos
+# Are the inter-sector crossings defective or diabolic?
 
-**Manuscrito auditado:** CQG-115250, *"Exceptional points and cusp singularities
-in relativistic stellar oscillations with causal bulk relaxation"*, Sec. 7.4(iii)
-y Ec. (44).
+Supporting computation for section 7.4(iii) and Eq. (51) of *Exceptional points
+and cusp singularities in relativistic stellar oscillations with causal bulk
+relaxation*.
 
-## 1. Qué afirma el paper y por qué importa
+## The question
 
-En la Sec. 7.4(iii), al describir la deformación del perfil de transporte
-ζ(x) = ζ₀ sech²x (1+η sech²x), el paper señala que en **η = 0** (sistema
-exactamente resoluble, perfil alineado) dos sectores cualesquiera de igual
-paridad m, M comparten un autovalor en
-
-```
-s = -(m+M+1)/2 ,   ζ₀ = (1+sτ)[s²+(2m+1)s+m(m+1)+V0] / (-s)
-```
-
-y los llama **"a semisimple (diabolic) degeneracy"**. Tres miembros de esta
-familia se usan como puntos de nacimiento de las ramas EP2 de la Figura 4:
-`(2,10)`, `(0,12)`, `(0,16)`.
-
-"Diabólico" es un término técnico preciso (von Neumann–Wigner, Berry): un
-cruce **semisimple**, donde la multiplicidad algebraica y la geométrica del
-autovalor doble coinciden (=2) — es decir, existen **dos** autovectores
-genuinamente independientes que se cruzan sin interactuar. Es la contraparte
-"benigna" de un punto excepcional (EP2), que en cambio es **defectivo**:
-multiplicidad algebraica 2 pero geométrica 1 (un solo autovector, bloque de
-Jordan, el operador no diagonaliza ahí).
-
-La pregunta que motivó esta demostración: ¿el pencil hiperboloidal del paper,
-que **no** es diagonal sino solo *triangular* en la base de monomios σᵐ
-(Teorema de la Sec. 7.2), realmente deja dos autovectores independientes en
-esos cruces, o el acoplamiento fuera de la diagonal los colapsa a uno solo?
-
-## 2. Resultado
-
-**Los tres puntos son defectivos (bloque de Jordan), no diabólicos.**
-Multiplicidad algebraica = 2 (por construcción: dos factores del determinante
-se anulan a la vez), pero **multiplicidad geométrica = 1** en los tres casos,
-verificado de tres formas independientes (aritmética racional exacta,
-insensible a la truncación; y SVD del operador discretizado completo, tal
-como lo construye el propio repositorio del autor).
-
-| Punto | s* | ζ₀* | mult. algebraica | mult. geométrica | Soporte del autovector |
-|---|---|---|---|---|---|
-| (2,10) | −6.5 | 6601/1300 ≈ 5.077692 | 2 | **1** | σ⁰, σ² (sector m=2) |
-| (0,12) | −6.5 | 9821/1300 ≈ 7.554615 | 2 | **1** | σ⁰ (sector m=0) |
-| (0,16) | −8.5 | 13261/1700 ≈ 7.800588 | 2 | **1** | σ⁰ (sector m=0) |
-
-## 3. Por qué ocurre (el mecanismo, en una idea)
-
-El script `01` deriva de forma simbólica que
+Under the transport-profile deformation ζ(x) = ζ₀ sech²x (1 + η sech²x), the
+manuscript states that at η = 0 any two sectors of equal parity m, M share an
+eigenvalue at
 
 ```
-T(s) σᵐ = P_m(s) σᵐ  −  (1+sτ) m(m−1) σᵐ⁻²
+s = -(m+M+1)/2 ,   zeta0 = (1+s*tau)[s^2 + (2m+1)s + m(m+1) + V0] / (-s)
 ```
 
-es decir, T(s) en la base {1, σ², σ⁴, …} es una matriz **triangular superior
-de ancho de banda 1** (bidiagonal): la diagonal son las cúbicas sectoriales
-P_m(s) (esto es lo que ya prueba el Teorema del paper, y es correcto — el
-**espectro**, es decir el conjunto de raíces de det T(s) = ∏ₘ P_m(s), sí es
-la unión exacta de las raíces sectoriales). Pero el coeficiente fuera de la
-diagonal, −(1+sτ)m(m−1), es **genéricamente distinto de cero** para todo m
-par ≥ 2. Esa cadena de acoplamiento ininterrumpida es la que decide la
-estructura de **autovectores**, no solo de autovalores.
+and that these crossings are **defective** — algebraically double but
+geometrically simple, i.e. Jordan blocks — rather than **diabolic** (semisimple)
+in the von Neumann–Wigner / Berry sense. Three members of the family are used as
+η = 0 birthplaces for the EP2 branches of figure 4: (2,10), (0,12) and (0,16).
 
-Al resolver T(s*)v = 0 recorriendo la recursión bidiagonal de arriba (grado
-alto) hacia abajo: el cero de **mayor** grado (M=10, 12 ó 16) nunca ancla una
-dirección libre genuina, porque la cadena que desciende desde él termina
-forzando una condición de consistencia en el peldaño del cero de **menor**
-grado (m=2 ó 0) que sólo se satisface si esa dirección entera se anula. El
-único autovector que sobrevive vive exclusivamente en el sector de **menor**
-grado. El cero del sector de mayor grado es, en este sentido preciso, un
-"cero fantasma" del determinante: contribuye a la multiplicidad algebraica
-pero no a la geométrica.
+The distinction is not cosmetic. The pencil is *triangular*, not diagonal, in the
+monomial basis σᵐ (Theorem, section 7.2). Triangularity fixes the spectrum, since
+the characteristic determinant of the restriction to an invariant subspace is
+∏ₘ Pₘ(s), but it says nothing by itself about eigenvectors: the off-diagonal
+coupling could leave two independent null directions at a crossing, or collapse
+them to one. Section 7.4(iii) argues from the recurrence that only one survives.
+This directory checks that argument by direct computation in exact arithmetic,
+and independently at the level of the full discretised operator.
 
-Esto no es un artefacto de truncar la base en algún Mmax arbitrario: el
-script `02` repite el cálculo de rango exacto (aritmética racional) con
-Mmax = 20, 30, 40, 60 y la nulidad da **1** en los cuatro casos, para los
-tres puntos. El script `03` repite la verificación a nivel del operador
-completo (discretización de Chebyshev, exactamente como la construye
-`bordered_newton_robustness.py` del repositorio del autor para certificar
-sus propios EP2/EP3): el segundo valor singular más pequeño queda resuelto
-~10⁶–10⁷ veces por encima del piso de precisión doble, confirmando de forma
-independiente que sólo hay **una** dirección nula, no dos.
+## Result
 
-## 4. Por qué esto no debilita al paper — al contrario
+All three points are defective. Algebraic multiplicity 2 by construction — two
+diagonal factors vanish together — but **geometric multiplicity 1**.
 
-Este hallazgo **no** contradice ningún resultado físico o cuantitativo del
-paper: η_c=0.19415, la identidad de la rama A′ (nace exactamente en
-`(−6.5, 6601/1300)`, confirmado por continuación independiente), el escape
-complejo a η=0.21 y η=0.40, y los exponentes de *splitting* certificados,
-fueron todos reproducidos de forma independiente en la auditoría previa y
-siguen siendo correctos.
+| Point  | s*   | zeta0*                  | alg. mult. | geom. mult. | eigenvector support |
+|--------|------|-------------------------|-----------|------------|---------------------|
+| (2,10) | −6.5 | 6601/1300 ≈ 5.077692    | 2 | **1** | σ⁰, σ² (sector m = 2) |
+| (0,12) | −6.5 | 9821/1300 ≈ 7.554615    | 2 | **1** | σ⁰ (sector m = 0)     |
+| (0,16) | −8.5 | 13261/1700 ≈ 7.800588   | 2 | **1** | σ⁰ (sector m = 0)     |
 
-De hecho, el resultado aquí es **consistente con, y refuerza**, la física del
-paper: si los cruces fuesen genuinamente diabólicos (semisimples), no habría
-ninguna garantía de que una perturbación genérica η>0 genere inmediatamente
-una rama EP2 (√ε) a partir de ellos — un cruce semisimple típicamente se
-abre linealmente en ε bajo perturbación genérica. Que el paper *sí* observe
-el nacimiento de ramas EP2 genuinas (B, R2) exactamente en estos puntos es
-precisamente lo que se espera si el punto de partida ya era defectivo (como
-aquí se demuestra), no diabólico.
+## Mechanism
 
-**Corrección sugerida (cosmética, no de fondo):** en el abstract, Ec. (44),
-Sec. 7.4(iii) y el pie de la Figura 4, sustituir "a semisimple (diabolic)
-degeneracy" por algo del tipo *"an algebraically double, geometrically
-simple inter-sector crossing, at which the two sector eigenvalue branches
-cross with vanishing splitting to leading order but only one physical
-eigenmode"* — o, más brevemente, "a defective inter-sector crossing". Ningún
-número del paper cambia.
+Script `01` derives symbolically that
 
-## 5. Cómo correr los scripts
+```
+T(s) sigma^m = P_m(s) sigma^m  -  (1 + s*tau) m(m-1) sigma^(m-2)
+```
+
+so in the basis {1, σ², σ⁴, …} the operator is upper bidiagonal: the diagonal
+carries the sector cubics Pₘ(s), and the off-diagonal coefficient
+−(1+sτ)m(m−1) is non-zero for every even m ≥ 2. That unbroken coupling chain is
+what decides the eigenvector structure.
+
+Solving T(s\*)v = 0 by descending the chain from the top: the zero of the
+**higher** degree (M = 10, 12 or 16) never anchors a free direction, because the
+chain descending from it forces a consistency condition at the rung of the
+**lower** zero (m = 2 or 0) that is satisfied only if the whole direction
+vanishes. The surviving eigenvector lives entirely in the lower sector. The
+higher-sector zero contributes to the algebraic multiplicity but not to the
+geometric one.
+
+This is not an artefact of truncating the basis: script `02` repeats the exact
+rank computation in rational arithmetic at Mmax = 20, 30, 40, 60 and obtains
+nullity 1 in all four cases for all three points. Script `03` repeats the check
+on the full Chebyshev-discretised operator, built exactly as
+`bordered_newton_robustness.py` builds it: the second-smallest singular value
+sits 10⁶–10⁷ above the double-precision floor, confirming independently that
+there is one null direction, not two.
+
+## Why this supports the physics of section 7.4
+
+If the crossings were genuinely semisimple, a generic perturbation η > 0 would
+open them **linearly** in η, and there would be no reason to expect EP2 branches
+with square-root splitting to emerge from them. The manuscript does observe
+genuine EP2 branches (A′, B) being born exactly at these points, which is what a
+defective starting point predicts. This computation and the continuation results
+of section 7.4 are therefore two independent routes to the same conclusion.
+
+None of the quantitative results is affected: η_c = 0.1941(1), the identity of
+branch A′ (born at (−6.5, 6601/1300)), the complex escape at η = 0.21 and
+η = 0.40, and the certified splitting exponents all stand.
+
+## Running the scripts
 
 ```bash
-# Script 1 y 2: solo necesitan sympy, no requieren el repo del autor
-pip install sympy --break-system-packages
+pip install sympy mpmath numpy
 python3 01_estructura_triangular_simbolica.py
 python3 02_multiplicidad_geometrica_racional.py
-
-# Script 3: requiere el repositorio del autor y mpmath/numpy
-git clone https://github.com/orlandoue/relativistic-stellar-EPs
-pip install mpmath numpy --break-system-packages
-REPO_PATH=./relativistic-stellar-EPs python3 03_verificacion_operador_chebyshev.py
+python3 03_verificacion_operador_chebyshev.py     # reuses ../bordered_newton_robustness.py
 ```
 
-- **`01_estructura_triangular_simbolica.py`** — deriva simbólicamente (sympy,
-  sin ningún redondeo) la acción de T(s) sobre σᵐ y aísla el coeficiente de
-  acoplamiento fuera de la diagonal. Es el fundamento de todo lo demás.
-- **`02_multiplicidad_geometrica_racional.py`** — el cálculo central: rango y
-  espacio nulo *exactos* (aritmética racional) de T(s*,ζ₀*) para los tres
-  puntos declarados, con verificación de estabilidad ante la truncación y
-  extracción explícita del autovector superviviente.
-- **`03_verificacion_operador_chebyshev.py`** — confirmación independiente a
-  nivel del operador discretizado completo (no ya la matriz de monomios
-  truncada), reutilizando literalmente el código de discretización del
-  repositorio del autor.
+- **`01_estructura_triangular_simbolica.py`** — symbolic derivation (sympy, no
+  rounding) of the action of T(s) on σᵐ, isolating the off-diagonal coupling
+  coefficient. Everything else rests on this.
+- **`02_multiplicidad_geometrica_racional.py`** — the central computation: exact
+  rank and null space of T(s\*, ζ₀\*) in rational arithmetic at the three declared
+  points, with a truncation-stability check and explicit extraction of the
+  surviving eigenvector.
+- **`03_verificacion_operador_chebyshev.py`** — independent confirmation on the
+  full discretised operator rather than on the monomial matrix.

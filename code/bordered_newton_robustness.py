@@ -39,8 +39,13 @@
 #     NO una degeneracion diabolica (semisimple): la multiplicidad geometrica
 #     es uno por la recurrencia de dos terminos. El acople eta lo convierte en
 #     EP2 genuino. Invisible para el modelo 0-D.
-#   * La "rama 2" (s~-8.1 en eta~0.2) es otra rama sectorial deformada
-#     (candidato: sector m=5, EP2 en (-8.0872, 2.9682)); pendiente confirmar.
+#   * La "rama 2" (R2, s~-8.1 en eta~0.2): PADRE NO ESTABLECIDO. Se han
+#     barajado dos candidatos incompatibles -- el cruce (0,16) en
+#     (-8.5, 7.8006) y el EP2 propio del sector m=5 en (-8.0872, 2.9682) --
+#     pero la continuacion archivada va de (-8.544, 4.993) en eta=0.05 a
+#     (-8.766, 4.791) en eta=0.10 con zeta0* DECRECIENTE en eta, de modo que
+#     extrapolando a eta->0 no tiende a ninguno de los dos. No afirmar un
+#     padre hasta continuar la rama hasta eta=0.
 #   * El cusp del sector m=0 (EP3, tau libre) persiste al menos hasta
 #     eta=0.44 con tau* ~ 0.0406-0.0411 casi constante. (El manuscrito cita
 #     de forma conservadora solo hasta eta~0.2, el alcance de la corrida
@@ -250,9 +255,13 @@ if __name__ == "__main__":
         else:
             deta = deta / 2
     print(f"   -> rama A termina en eta_c ~ {float(eta):.5f}: pliegue con la rama")
-    print(f"      A' (EP2 del sector m=2); ambas escapan a zeta0 complejo (2C).")
+    print(f"      A', que es el CRUCE INTERSECTORIAL (2,10) -- no el EP2 propio")
+    print(f"      del sector m=2, que esta en (-6.3829377564, 5.0764863436) y es")
+    print(f"      un objeto distinto (ver la correccion en la cabecera). Ambas")
+    print(f"      escapan a zeta0 complejo (2C). La rama A' se genera y archiva")
+    print(f"      en branches_Ap_B.py / data/branches_Ap_B.json.")
     print(f"      Nota: si el ultimo paso muestra |s*| ~ 6.9, el Newton salto a")
-    print(f"      la rama B (diabolica P0xP12) y eta_c es el punto anterior.")
+    print(f"      la rama B (cruce defectivo P0 x P12) y eta_c es el punto anterior.")
     out["rama1"] = r1
 
     # ---------- 2C: rama compleja post-pliegue ----------
@@ -311,6 +320,11 @@ if __name__ == "__main__":
             deta = deta / 2
     out["cusp"] = r4
 
+    # NOTA DE PROVENIENCIA: este archivo es el que, truncado a 7 cifras
+    # significativas, se archiva como data/robustness_continuation.json.
+    # Se escribe con nombre propio para no sobreescribir el dato archivado.
     with open("fase2_robustez.json", "w") as f:
         json.dump(out, f, indent=1)
     print("\nGuardado: fase2_robustez.json")
+    print("  (= data/robustness_continuation.json una vez truncado a 7 cifras;")
+    print("   ver la nota _note de ese archivo para el porque de la truncacion)")
